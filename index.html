@@ -1,75 +1,87 @@
 <html>
-<p>So far you have rolled:</p>
-<ul id="list"></ul>
-<div id="1">
-<button id="button_roll">Roll the dice</button>
-</div>
-<p>Total: <span id="total">0</span>. <span id="info">Keep playing!</span><img id="1"></p>
-<button id="button_remove">Remove the last roll</button>
-<button id="button_restart">Start again</button>
-<script>
-var dice, rolls, item, Sum;
+  <p>So far you have rolled:</p>
+  <ul id="list"></ul>
+  <div id="delete">
+  <button id="button_roll">Roll the dice</button>
+  </div>
+  <p>Total: <span id="total">0</span>. <span id="info">Keep playing!</span></p>
+  <button id="button_remove">Remove the last roll</button>
+  <button id="button_restart">Start again</button>
+  <script>
+    var dice, rolls, item, Sum;
 
-function randomInt(n) {
-  // Return a random number from in [0, n[
-  return Math.floor(Math.random()*n);
-}
+    function randomInt(n) {
+      // Return a random number from in [0, n[
+      return Math.floor(Math.random()*n);
+    }
 
-function randomMember(arr) {
-  // Return a random member of the array
-  return arr[randomInt(arr.length)]
-}
+    function randomMember(arr) {
+      // Return a random member of the array
+      return arr[randomInt(arr.length)]
+    }
 
-// Describe this function...
-function display_the_rolls() {
-  if(--window.LoopTrap <= 0) throw "Infinite loop.";
-  let element_list = document.getElementById('list');
-  element_list.replaceChildren();
-  rolls.forEach((item) => {
-    let new_li = document.createElement('li');
-    new_li.innerText = item;
+    // Describe this function...
+    function display_the_rolls() {
+      if(--window.LoopTrap <= 0) throw "Infinite loop.";
+      let element_list = document.getElementById('list');
+      element_list.replaceChildren();
+      rolls.forEach((item) => {
+        let new_li = document.createElement('li');
+        new_li.innerText = item;
 
-    element_list.appendChild(new_li);
-  });
-  let element_total = document.getElementById('total');
-  Sum = rolls.reduce((a,b) => a+b, 0);
-  element_total.innerText = Sum;
-  let element_info = document.getElementById('info');
-  if (Sum == 11) {
-    element_info.innerText = 'You won 🏆';
-    let element_1 = document.getElementById('1');
-    element_1.replaceChildren();
-  } else if (Sum > 11) {
-    element_info.innerText = 'You lost 👎';
-    let element_delete = document.getElementById('delete');
-    element_delete.replaceChildren();
-  } else {
-    element_info.innerText = 'Keep playing!';
-  }
-}
-
-
-dice = [1, 2, 3, 4, 5, 6];
-rolls = [];
-display_the_rolls();
+        element_list.appendChild(new_li);
+      });
+      let element_total = document.getElementById('total');
+      Sum = rolls.reduce((a,b) => a+b, 0);
+      element_total.innerText = Sum;
+      let element_info = document.getElementById('info');
+      if (Sum == 11) {
+        element_info.innerText = 'You won 🏆';
+        let element_delete2 = document.getElementById('delete');
+        element_delete2.replaceChildren();
+      } else if (Sum > 11) {
+        element_info.innerText = 'You lost 👎';
+        let element_delete3 = document.getElementById('delete');
+        element_delete3.replaceChildren();
+      } else {
+        element_info.innerText = 'Keep playing!';
+      }
+    }
 
 
-document.getElementById('button_restart').addEventListener('click', (event) => {
-  rolls = [];
-  display_the_rolls();
+    dice = [1, 2, 3, 4, 5, 6];
+    rolls = [];
+    display_the_rolls();
 
-});
 
-document.getElementById('button_roll').addEventListener('click', (event) => {
-  rolls.push(randomMember(dice));
-  display_the_rolls();
+    document.getElementById('button_restart').addEventListener('click', (event) => {
+      rolls = [];
+      display_the_rolls();
+      let element_delete = document.getElementById('delete');
+      let new_button = document.createElement('button');
+      new_button.setAttribute("id", 'button_roll_2');
+      new_button.innerText = 'Roll the dice';
 
-});
+      element_delete.appendChild(new_button);
 
-document.getElementById('button_remove').addEventListener('click', (event) => {
-  rolls.pop();
-  display_the_rolls();
+    });
 
-});
-</script>
+    document.getElementById('button_roll').addEventListener('click', (event) => {
+      rolls.push(randomMember(dice));
+      display_the_rolls();
+
+    });
+
+    document.getElementById('button_roll_2').addEventListener('click', (event) => {
+      rolls.push(randomMember(dice));
+      display_the_rolls();
+
+    });
+
+    document.getElementById('button_remove').addEventListener('click', (event) => {
+      rolls.pop();
+      display_the_rolls();
+
+    });
+  </script>
 </html>
